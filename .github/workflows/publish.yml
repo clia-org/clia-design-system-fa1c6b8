@@ -45,11 +45,33 @@ jobs:
 
           # Root redirect (within the repo Pages path)
           # DocC bundles route under /documentation/<TechnologyRoot>/
-          cat > "${output_root}/index.html" <<EOF
-          <!doctype html><html><head>
-            <meta http-equiv="refresh" content="0; url=${base_path}/documentation/clia-design-system/">
-          </head></html>
-          EOF
+          cat > "/index.html" <<EOF
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CLIA Design System (Provisioned)</title>
+
+  <meta name="description" content="Provisioned CLIA design-system notes: stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="CLIA Design System (Provisioned)"/>
+  <meta property="og:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+  <meta property="og:image" content="https://clia.sh/images/index/index-card.svg"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="CLIA Design System (Provisioned)"/>
+  <meta name="twitter:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+  <meta name="twitter:image" content="https://clia.sh/images/index/index-card.svg"/>
+
+  <meta http-equiv="refresh" content="0; url=/documentation/index/"/>
+</head>
+<body>
+  <p>Redirecting to documentation…</p>
+</body>
+</html>
+EOF
           touch "${output_root}/.nojekyll"
 
       - name: Upload Pages artifact
