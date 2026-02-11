@@ -1,0 +1,69 @@
+name: Publish DocC
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.2'
+
+      - name: Build DocC
+        run: |
+          set -euo pipefail
+          output_root="${GITHUB_WORKSPACE}/_site"
+          rm -rf "${output_root}"
+          mkdir -p "${output_root}"
+
+          # Repo Pages are served under /<repo>/, so set hosting-base-path accordingly.
+          repo_name="${GITHUB_REPOSITORY#*/}"
+          base_path="/${repo_name}"
+
+          docc convert "clia-design-system.docc" \
+            --output-path "${output_root}" \
+            --transform-for-static-hosting \
+            --hosting-base-path "${base_path}"
+
+          # Root redirect (within the repo Pages path)
+          # DocC bundles route under /documentation/<TechnologyRoot>/
+          cat > "${output_root}/index.html" <<EOF
+          <!doctype html><html><head>
+            <meta http-equiv="refresh" content="0; url=${base_path}/documentation/clia-design-system/">
+          </head></html>
+          EOF
+          touch "${output_root}/.nojekyll"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}documentation/clia-design-system/
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
