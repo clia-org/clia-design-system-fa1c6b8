@@ -56,13 +56,15 @@ jobs:
 
             <meta property="og:type" content="website"/>
             <meta property="og:title" content="CLIA Design System (Provisioned)"/>
+            <meta property="og:url" content="https://clia.sh//"/>
+            <meta property="og:site_name" content="CLIA"/>
             <meta property="og:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
-            <meta property="og:image" content="https://clia.sh/images/index/index-card.svg"/>
+            <meta property="og:image" content="https://clia.sh/images/index/carrie-the-scribe-card.png"/>
 
             <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:title" content="CLIA Design System (Provisioned)"/>
             <meta name="twitter:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
-            <meta name="twitter:image" content="https://clia.sh/images/index/index-card.svg"/>
+            <meta name="twitter:image" content="https://clia.sh/images/index/carrie-the-scribe-card.png"/>
 
             <meta http-equiv="refresh" content="0; url=${base_path}/documentation/index/"/>
           </head>
