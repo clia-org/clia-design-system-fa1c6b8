@@ -45,7 +45,7 @@ jobs:
 
           # Root redirect (within the repo Pages path)
           # DocC bundles route under /documentation/<TechnologyRoot>/
-          cat > "/index.html" <<EOF
+          cat > "${output_root}/index.html" <<EOF
 <!doctype html>
 <html lang="en">
 <head>
@@ -65,7 +65,7 @@ jobs:
   <meta name="twitter:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
   <meta name="twitter:image" content="https://clia.sh/images/index/index-card.svg"/>
 
-  <meta http-equiv="refresh" content="0; url=/documentation/index/"/>
+  <meta http-equiv="refresh" content="0; url=${base_path}/documentation/index/"/>
 </head>
 <body>
   <p>Redirecting to documentation…</p>
