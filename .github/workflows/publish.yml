@@ -43,35 +43,35 @@ jobs:
             --transform-for-static-hosting \
             --hosting-base-path "${base_path}"
 
-          # Root redirect (within the repo Pages path)
-          # DocC bundles route under /documentation/<TechnologyRoot>/
+          # Custom landing page for rich link previews (OpenGraph/Twitter).
+          # Redirect to the actual DocC tech-root route.
           cat > "${output_root}/index.html" <<EOF
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>CLIA Design System (Provisioned)</title>
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>CLIA Design System (Provisioned)</title>
+            <meta name="description" content="Provisioned CLIA design-system notes: stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
 
-  <meta name="description" content="Provisioned CLIA design-system notes: stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="CLIA Design System (Provisioned)"/>
+            <meta property="og:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+            <meta property="og:image" content="https://clia.sh/images/index/index-card.svg"/>
 
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="CLIA Design System (Provisioned)"/>
-  <meta property="og:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
-  <meta property="og:image" content="https://clia.sh/images/index/index-card.svg"/>
+            <meta name="twitter:card" content="summary_large_image"/>
+            <meta name="twitter:title" content="CLIA Design System (Provisioned)"/>
+            <meta name="twitter:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
+            <meta name="twitter:image" content="https://clia.sh/images/index/index-card.svg"/>
 
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="CLIA Design System (Provisioned)"/>
-  <meta name="twitter:description" content="Stack math (ASMPC), lineage, Discord/TUI conventions, and philographics."/>
-  <meta name="twitter:image" content="https://clia.sh/images/index/index-card.svg"/>
+            <meta http-equiv="refresh" content="0; url=${base_path}/documentation/index/"/>
+          </head>
+          <body>
+            <p>Redirecting to documentation...</p>
+          </body>
+          </html>
+          EOF
 
-  <meta http-equiv="refresh" content="0; url=${base_path}/documentation/index/"/>
-</head>
-<body>
-  <p>Redirecting to documentation…</p>
-</body>
-</html>
-EOF
           touch "${output_root}/.nojekyll"
 
       - name: Upload Pages artifact
@@ -84,7 +84,7 @@ EOF
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}documentation/clia-design-system/
+      url: ${{ steps.deployment.outputs.page_url }}documentation/index/
     steps:
       - name: Deploy
         id: deployment
